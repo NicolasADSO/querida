@@ -543,3 +543,52 @@ button:hover {
 /* Ajuste para Diciembre 2025 */
 #f2 .paper-content { padding-top: 0; }
 #f2 h2 { margin-bottom: 2px; padding-bottom: 5px; line-height: 1.1; }
+
+
+/* --- Estilo de Impresión Simplificado (Restaurado) --- */
+@media print {
+    body, .scene, .book {
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        perspective: none !important;
+        background: none !important;
+    }
+
+    .book {
+        transform: none !important;
+        display: block !important;
+    }
+
+    .paper {
+        position: relative !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 0 50px 0 !important;
+        display: block !important;
+        page-break-after: always;
+        box-shadow: none !important;
+        border: 1px solid #eee;
+    }
+
+    .front, .back {
+        position: relative !important;
+        display: block !important;
+        height: auto !important;
+        width: 100% !important;
+        transform: none !important;
+        backface-visibility: visible !important;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+
+    .controls, #reset-btn {
+        display: none !important;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
