@@ -1,0 +1,30 @@
+CÓMO IMPRIMIR ESTE DIARIO (O ENVIAR A PAPELERÍA)
+
+Si no tienes impresora, la mejor opción es guardar este diario como un archivo PDF y llevar ese archivo a la papelería.
+
+PASOS:
+
+1. Abre el archivo "index.html" en tu navegador (Google Chrome es el mejor para esto).
+   - Verás el diario en pantalla.
+
+2. Presiona las teclas "Control + P" (o ve al menú y elige "Imprimir").
+
+3. En la ventana que aparece, busca la opción "Destino" o "Impresora".
+   - IMPORTANTE: En lugar de elegir una impresora real, selecciona "Guardar como PDF" (o "Microsoft Print to PDF").
+
+4. Busca la opción "Más configuraciones" (o "Configuración").
+   - MARCA la casilla que dice "Gráficos de fondo" (Background graphics).
+   - Esto es vital para que salgan los colores, las fotos y el diseño bonito. Si no lo marcas, saldrá en blanco y negro o sin fondos.
+
+5. Dale clic a "Guardar".
+   - Te pedirá un nombre y lugar para guardar el archivo.
+   - Ponle un nombre como "Diario_Para_Heidy.pdf".
+
+6. ¡Listo!
+   - Ahora tienes un archivo PDF con todas las páginas listas como tarjetas.
+   - Envía este archivo PDF a la papelería por correo, WhatsApp o llévalo en una USB.
+   - Diles que lo impriman en papel cartulina o papel fotográfico mate para que quede más rígido y bonito.
+
+NOTA PARA LA PAPELERÍA:
+- El archivo ya tiene márgenes y diseño de corte incluidos.
+- Imprimir en tamaño Carta o A4 ("Ajustar a página" si es necesario, pero mejor al 100%).
