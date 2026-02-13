@@ -540,49 +540,59 @@ button:hover {
 
     /* --- Estilos para ImpresiÃ³n / ExportaciÃ³n --- */
 
+}
+
 /* Ajuste para Diciembre 2025 */
 #f2 .paper-content { padding-top: 0; }
 #f2 h2 { margin-bottom: 2px; padding-bottom: 5px; line-height: 1.1; }
 
-
-/* --- Estilo de Impresión Simplificado (Restaurado) --- */
+/* --- Estilo de Impresión GLOBAL (Fuera del media query móvil) --- */
 @media print {
-    body, .scene, .book {
+    body {
+        display: block !important;
+        background: none !important;
         height: auto !important;
         width: 100% !important;
         overflow: visible !important;
-        perspective: none !important;
-        background: none !important;
     }
 
-    .book {
-        transform: none !important;
+    .scene, .book {
         display: block !important;
+        position: static !important;
+        transform: none !important;
+        perspective: none !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
     }
 
     .paper {
+        display: block !important;
         position: relative !important;
-        transform: none !important;
+        margin: 0 0 20px 0 !important;
+        page-break-after: always;
         width: 100% !important;
         height: auto !important;
-        margin: 0 0 50px 0 !important;
-        display: block !important;
-        page-break-after: always;
         box-shadow: none !important;
-        border: 1px solid #eee;
+        border-bottom: 1px dashed #ccc;
+        top: auto !important;
+        left: auto !important;
     }
 
     .front, .back {
-        position: relative !important;
         display: block !important;
+        position: relative !important;
         height: auto !important;
+        min-height: 500px;
         width: 100% !important;
         transform: none !important;
         backface-visibility: visible !important;
         page-break-inside: avoid;
-        margin-bottom: 20px;
+        top: auto !important;
+        left: auto !important;
     }
 
+    /* Ocultar botones */
     .controls, #reset-btn {
         display: none !important;
     }
