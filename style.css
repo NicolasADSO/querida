@@ -1,0 +1,625 @@
+/* Reset y variables */
+:root {
+    --bg-color: #2c3e50;
+    /* Fondo de mesa oscuro para contraste */
+    --paper-color: #fdfbf7;
+    --paper-line: #e3e0d9;
+    --cover-color: #8e44ad;
+    --text-color: #4a4a4a;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-deep: rgba(0, 0, 0, 0.4);
+    --book-width: 350px;
+    /* Ancho base */
+    --book-height: 500px;
+    /* Alto base */
+    --transition-speed: 0.6s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    font-family: 'Cormorant Garamond', serif;
+    overflow: hidden;
+    /* Evitar scroll en body */
+}
+
+/* Escena 3D */
+.scene {
+    position: relative;
+    width: var(--book-width);
+    height: var(--book-height);
+    margin: 20px;
+    perspective: 1500px;
+    /* Profundidad 3D */
+}
+
+/* El Libro */
+.book {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-speed);
+}
+
+/* Las Hojas */
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center;
+    /* Pivote a la izquierda como un libro real */
+    transform-style: preserve-3d;
+    transition: transform var(--transition-speed) cubic-bezier(0.645, 0.045, 0.355, 1);
+    /* Curva natural */
+    z-index: 1;
+    border-radius: 5px 15px 15px 5px;
+    box-shadow: 1px 1px 5px var(--shadow-light);
+    cursor: pointer;
+}
+
+/* Estilos comunes para frente y dorso */
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--paper-color);
+    backface-visibility: hidden;
+    /* Ocultar el lado que no se ve */
+    border-radius: 5px 15px 15px 5px;
+    overflow: hidden;
+    /* Textura sutil de papel */
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Cara Frontal */
+.front {
+    z-index: 2;
+    /* Gradiente para simular el pliegue del papel cerca del lomo */
+    background: linear-gradient(to right, #eceaea, 5%, var(--paper-color) 15%);
+}
+
+/* Cara Trasera */
+.back {
+    z-index: 1;
+    transform: rotateY(180deg);
+    /* Ya está volteada */
+    /* Gradiente invertido para el dorso */
+    background: linear-gradient(to left, #eceaea, 5%, var(--paper-color) 15%);
+    border-left: 1px solid var(--paper-line);
+}
+
+/* Estado de página volteada */
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Sombras entre páginas con pseudo-elementos */
+.front::after,
+.back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+    pointer-events: none;
+}
+
+/* Sombra al pasar hoja */
+.flipped .front::after {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    opacity: 1;
+}
+
+.flipped .back::after {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+    opacity: 0;
+    /* Se aclara al terminar de girar */
+}
+
+
+/* --- Contenido del Diario --- */
+
+.paper-content {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+}
+
+.center-content {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Dancing Script', cursive;
+    color: #4a3b32;
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    font-size: 3.5rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid var(--paper-line);
+    padding-bottom: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.date {
+    font-style: italic;
+    color: #888;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+/* Diseño de Portada */
+.cover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Patrón sutil MEZCLADO con el gradiente */
+    background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    background-blend-mode: normal;
+    /* El linear-gradient con opacidad ya hace el trabajo */
+}
+
+.cover-design {
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    outline: 1px solid rgba(255, 255, 255, 0.4);
+    /* Doble borde sutil */
+    outline-offset: 4px;
+    padding: 40px 20px;
+    border-radius: 5px;
+    max-width: 80%;
+    background: rgba(255, 255, 255, 0.1);
+    /* Fondo semitransparente */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.cover h1 {
+    color: white;
+    font-weight: 400;
+    /* Letra más fina y elegante */
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.cover p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.decoration {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 20px;
+    display: block;
+    font-style: italic;
+}
+
+
+/* Placeholder de imagen */
+.image-placeholder {
+    width: 100%;
+    height: 150px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    color: #999;
+    transform: rotate(-2deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Galería de 2 fotos */
+.photo-gallery {
+    display: flex;
+    gap: 10px;
+    margin: -10px 0 15px 0;
+    /* Subimos la galería */
+    z-index: 5;
+    /* Asegurar que quede por encima si solapa algo */
+    position: relative;
+}
+
+.photo-gallery .image-placeholder {
+    width: 50%;
+    height: 120px;
+    /* Un poco más pequeñas para que quepan */
+    margin: 0;
+    transform: none;
+    /* Quitamos rotación individual base */
+    overflow: hidden;
+    /* Para recortar la imagen */
+    padding: 0;
+    /* Quitar padding si existiera */
+    background-color: #fff;
+    border: 5px solid white;
+    /* Marco blanco tipo foto */
+}
+
+.photo-gallery .image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-gallery .image-placeholder:nth-child(1) {
+    transform: rotate(-3deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.photo-gallery .image-placeholder:nth-child(2) {
+    transform: rotate(2deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.poem {
+    font-style: italic;
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 50px;
+}
+
+/* Ajuste específico para la conclusión */
+#f6 .poem {
+    margin-top: 10px;
+    /* Mucho más arriba que el poema normal */
+    text-align: justify;
+    /* El usuario lo escribió como párrafo largo */
+    font-size: 1.1rem;
+    /* Ajuste para que quepa bien si es largo */
+}
+
+#f6 h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 3.5rem;
+    color: #d4a5a5;
+    /* Color acento rosado/tierra */
+    transform: rotate(-5deg);
+    animation: pulse 2s infinite ease-in-out;
+    text-shadow: 1px 1px 0px #fff, 2px 2px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1) rotate(-5deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotate(-5deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(-5deg);
+    }
+}
+
+button {
+    background: var(--text-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #333;
+}
+
+
+
+/* --- Mejoras Visuales Adicionales --- */
+
+/* Listas personalizadas (para la carta del 14 de Feb) */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 20px;
+    padding-left: 30px;
+    /* Más espacio para el corazón grande */
+    position: relative;
+    text-align: justify;
+}
+
+li::before {
+    content: '♥';
+    color: #e84393;
+    /* Un rosa más vibrante */
+    position: absolute;
+    left: -5px;
+    /* Ajuste para el tamaño extra */
+    top: -5px;
+    font-size: 2.2rem;
+    /* AÚN MÁS GRANDE */
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+/* Efecto de Cinta Adhesiva (Washi Tape) en fotos */
+.image-placeholder {
+    position: relative;
+}
+
+.image-placeholder::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 1px dashed rgba(0, 0, 0, 0.1);
+    border-right: 1px dashed rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* Variación para la cinta de la segunda foto */
+.image-placeholder:nth-child(even)::after {
+    top: auto;
+    bottom: -10px;
+    background-color: rgba(255, 255, 220, 0.6);
+    /* Cinta un poco amarillenta */
+}
+
+/* Mejorar el Botón de cerrar */
+button {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 8px 15px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-top: 20px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: var(--text-color);
+    color: #fff;
+}
+
+/* --- Optimización Móvil y Responsive --- */
+
+/* Controles flotantes en móvil */
+.controls {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+}
+
+.controls button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    padding: 0;
+    color: white;
+    cursor: pointer;
+    /* Mostrar controles en móvil */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 769px) {
+    .controls {
+        display: flex;
+        /* Mostrar siempre también en PC */
+    }
+
+    .controls button {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        transition: all 0.3s;
+    }
+
+    .controls button:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: scale(1.1);
+    }
+}
+
+/* Responsive para pantallas pequeñas (Portrait) */
+@media (max-width: 768px) {
+    :root {
+        /* Ajustamos tamaño para que quepa bien una sola página en pantalla */
+        --book-width: 85vw;
+        --book-height: 70vh;
+    }
+
+    .scene {
+        margin: 0;
+        /* En móvil quitamos la perspectiva exagerada para que sea más legible */
+        perspective: 1000px;
+    }
+
+    .book {
+        /* La transición de transform debe incluir el desplazamiento de enfoque */
+        transition: transform 0.5s ease-in-out;
+    }
+
+    /* Ajustes de contenido */
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .paper-content {
+        padding: 20px;
+    }
+
+    .cover-design {
+        padding: 20px;
+        border-width: 2px;
+    }
+
+    /* --- Estilos para Impresión / Exportación --- */
+    @media print {
+        body {
+            background: none;
+            height: auto;
+            overflow: visible;
+        }
+
+        .scene,
+        .book {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            perspective: none;
+            transform: none !important;
+        }
+
+        .book {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            /* Separación clara entre "diapositivas" */
+        }
+
+        .paper {
+            display: block;
+            /* Para que no afecte el flujo del contenido interno */
+            position: relative;
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            page-break-inside: avoid;
+        }
+
+        /* Estilo de "Tarjeta" para cada página (Frente y Dorso) */
+        .front,
+        .back {
+            position: relative;
+            /* TAMAÑO FIJO PARA RECORTAR Y ARMAR EL LIBRO */
+            width: 500px !important;
+            height: 750px !important;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Centrar verticalmente */
+
+            transform: none !important;
+            backface-visibility: visible;
+
+            margin-bottom: 20px;
+            /* Espacio entre tarjetas */
+            border-radius: 5px;
+            /* Bordes ligeramente redondeados */
+            border: 1px dashed #999;
+            /* Borde punteado GUÍA DE CORTE */
+            box-shadow: none;
+            /* Mejor sin sombra para imprimir */
+
+            page-break-inside: avoid;
+            overflow: hidden;
+            /* Asegurar que nada se salga del tamaño fijo */
+        }
+
+        .back {
+            margin-top: 0;
+            border-left: 1px solid #ccc;
+            /* Restaurar borde */
+        }
+
+        /* Ocultar elementos de UI */
+        .controls,
+        #reset-btn {
+            display: none !important;
+        }
+
+        /* Forzar impresión de fondos */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Ajustes de texto para impresión */
+        p,
+        h1,
+        h2,
+        li {
+            color: #000;
+            text-shadow: none;
+            /* Mejor legibilidad */
+        }
+
+        /* Ajuste especial para portada en impresión */
+        .cover {
+            min-height: 600px;
+            /* La portada sí que luzca grande */
+        }
+    }
+}
