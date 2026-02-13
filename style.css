@@ -332,14 +332,15 @@ p {
 }
 
 #b5 h2 {
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     padding-bottom: 5px;
     border-bottom: 1px solid var(--paper-line);
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 #b5 ul {
-    margin-top: 0;
+    margin-top: -10px;
+    /* Margen negativo para subir el texto a la fuerza */
     padding-top: 0;
 }
 
