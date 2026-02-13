@@ -547,12 +547,80 @@ button:hover {
 #f2 h2 { margin-bottom: 2px; padding-bottom: 5px; line-height: 1.1; }
 
 
-/* --- Estilo de Impresión: Modo Librito (Tarjeta centrada) --- */
+
+
+/* --- Estilos de Impresión (Restaurado - Configuración Original) --- */
 @media print {
-    body { margin: 0; padding: 0; background: none !important; }
-    .scene, .book { display: block !important; width: 100% !important; height: auto !important; perspective: none !important; overflow: visible !important; }
-    .paper { display: block !important; position: relative !important; width: 100% !important; height: auto !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; transform: none !important; border: none !important; }
-    .front, .back { display: block !important; position: relative !important; width: 400px !important; height: 580px !important; margin: 20px auto !important; border: 1px dashed #aaa !important; border-radius: 5px !important; transform: none !important; backface-visibility: visible !important; page-break-after: always; page-break-inside: avoid; overflow: hidden !important; left: auto !important; top: auto !important; }
-    .controls, #reset-btn { display: none !important; }
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body {
+        background: none;
+        height: auto;
+        overflow: visible;
+    }
+
+    .scene, .book {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        perspective: none;
+        transform: none !important;
+    }
+
+    .book {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .paper {
+        display: block;
+        position: relative;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+
+    .front, .back {
+        position: relative;
+        width: 500px !important;
+        height: 750px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transform: none !important;
+        backface-visibility: visible;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px dashed #999;
+        box-shadow: none;
+        page-break-inside: avoid;
+        overflow: hidden;
+    }
+    
+    .back {
+        margin-top: 0;
+        border-left: 1px solid #ccc;
+    }
+
+    .controls, #reset-btn {
+        display: none !important;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    p, h1, h2, li {
+        color: #000;
+        text-shadow: none;
+    }
+    
+    .cover {
+        min-height: 600px;
+    }
 }
