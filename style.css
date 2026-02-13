@@ -326,6 +326,23 @@ p {
     cursor: pointer;
 }
 
+/* Ajuste específico para la página del 14 de Febrero para subir texto */
+#b5 .paper-content {
+    padding-top: 0;
+}
+
+#b5 h2 {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--paper-line);
+    line-height: 1.2;
+}
+
+#b5 ul {
+    margin-top: 0;
+    padding-top: 0;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1) rotate(-5deg);
